@@ -111,13 +111,13 @@ public class Game extends Pane {
        List<Card> remainCards = discardPile.getCards();
        Collections.reverse(remainCards);
        Iterator<Card> deckIterator = remainCards.iterator();
-        deckIterator.forEachRemaining(card -> {
-                    card.flip();
-                    stockPile.addCard(card);
-                    addMouseEventHandlers(card);
-                    });
-        discardPile.clear();
-        System.out.println("Stock refilled from discard pile.");
+       deckIterator.forEachRemaining(card -> {
+                   card.flip();
+                   stockPile.addCard(card);
+                   addMouseEventHandlers(card);
+                   });
+       discardPile.clear();
+       System.out.println("Stock refilled from discard pile.");
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
@@ -169,14 +169,14 @@ public class Game extends Pane {
 
         discardPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
         discardPile.setBlurredBackground();
-        discardPile.setLayoutX(285);
+        discardPile.setLayoutX(275);
         discardPile.setLayoutY(20);
         getChildren().add(discardPile);
 
         for (int i = 0; i < 4; i++) {
             Pile foundationPile = new Pile(Pile.PileType.FOUNDATION, "Foundation " + i, FOUNDATION_GAP);
             foundationPile.setBlurredBackground();
-            foundationPile.setLayoutX(610 + i * 180);
+            foundationPile.setLayoutX(635 + i * 180);
             foundationPile.setLayoutY(20);
             foundationPiles.add(foundationPile);
             getChildren().add(foundationPile);
@@ -192,15 +192,80 @@ public class Game extends Pane {
     }
 
     public void dealCards() {
-        Iterator<Card> deckIterator = deck.iterator();
+        for (int i = 0; i < 52; i++) {
+            if (i == 0) {
+                tableauPiles.get(0).addCard(deck.get(i));
+                deck.get(i).flip();
+                addMouseEventHandlers(deck.get(i));
+                getChildren().add(deck.get(i));
+            }
+            else if (i <= 2){
+                tableauPiles.get(1).addCard(deck.get(i));
+                if (i == 2) {
+                    tableauPiles.get(1).addCard(deck.get(i));
+                    deck.get(i).flip();
+                    addMouseEventHandlers(deck.get(i));
+                }
+                getChildren().add(deck.get(i));
 
-
-
-        deckIterator.forEachRemaining(card -> {
-            stockPile.addCard(card);
-            addMouseEventHandlers(card);
-            getChildren().add(card);
-        });
+            }
+            else if (i <= 5){
+                tableauPiles.get(2).addCard(deck.get(i));
+                if (i == 5) {
+                    tableauPiles.get(2).addCard(deck.get(i));
+                    deck.get(i).flip();
+                    addMouseEventHandlers(deck.get(i));
+                }
+                getChildren().add(deck.get(i));
+            }
+            else if (i <= 9){
+                tableauPiles.get(3).addCard(deck.get(i));
+                if (i == 9) {
+                    tableauPiles.get(3).addCard(deck.get(i));
+                    deck.get(i).flip();
+                    addMouseEventHandlers(deck.get(i));
+                }
+                getChildren().add(deck.get(i));
+            }
+            else if (i <= 14){
+                tableauPiles.get(4).addCard(deck.get(i));
+                if (i == 14) {
+                    tableauPiles.get(4).addCard(deck.get(i));
+                    deck.get(i).flip();
+                    addMouseEventHandlers(deck.get(i));
+                }
+                getChildren().add(deck.get(i));
+            }
+            else if (i <= 20){
+                tableauPiles.get(5).addCard(deck.get(i));
+                if (i == 20) {
+                    tableauPiles.get(5).addCard(deck.get(i));
+                    deck.get(i).flip();
+                    addMouseEventHandlers(deck.get(i));
+                }
+                getChildren().add(deck.get(i));
+            }
+            else if (i <= 27){
+                tableauPiles.get(6).addCard(deck.get(i));
+                if (i == 27) {
+                    tableauPiles.get(6).addCard(deck.get(i));
+                    deck.get(i).flip();
+                    addMouseEventHandlers(deck.get(i));
+                }
+                getChildren().add(deck.get(i));
+            }
+            else {
+                stockPile.addCard(deck.get(i));
+                addMouseEventHandlers(deck.get(i));
+                getChildren().add(deck.get(i));
+            }
+        }
+  //      Iterator<Card> deckIterator = deck.iterator();
+  //          deckIterator.forEachRemaining(card -> {
+  //              stockPile.addCard(card);
+  //              addMouseEventHandlers(card);
+  //              getChildren().add(card);
+  //      });
 
     }
 
