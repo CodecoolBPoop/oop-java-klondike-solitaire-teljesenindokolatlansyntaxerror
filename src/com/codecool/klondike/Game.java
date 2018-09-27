@@ -13,9 +13,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Game extends Pane {
 
@@ -78,12 +76,16 @@ public class Game extends Pane {
             return;
         Card card = (Card) e.getSource();
         Pile pile = getValidIntersectingPile(card, tableauPiles);
+        Card destCard = pile.getTopCard();
+
         //TODO
         if (pile != null) {
             handleValidMove(card, pile);
+            System.out.println("A rarakott kartya " + card);
+            System.out.println("A lent levo kartya " + destCard);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
+  //          draggedCards = null; //Broken code
         }
     };
 
@@ -106,7 +108,15 @@ public class Game extends Pane {
     }
 
     public void refillStockFromDiscard() {
-        //TODO
+       List<Card> remainCards = discardPile.getCards();
+       Collections.reverse(remainCards);
+       Iterator<Card> deckIterator = remainCards.iterator();
+        deckIterator.forEachRemaining(card -> {
+                    card.flip();
+                    stockPile.addCard(card);
+                    addMouseEventHandlers(card);
+                    });
+        discardPile.clear();
         System.out.println("Stock refilled from discard pile.");
     }
 
@@ -141,6 +151,7 @@ public class Game extends Pane {
                 msg = String.format("Placed %s to a new pile.", card);
         } else {
             msg = String.format("Placed %s to %s.", card, destPile.getTopCard());
+            System.out.println(card.isOppositeColor(destPile.getTopCard(), card));
         }
         System.out.println(msg);
         MouseUtil.slideToDest(draggedCards, destPile);
@@ -182,7 +193,9 @@ public class Game extends Pane {
 
     public void dealCards() {
         Iterator<Card> deckIterator = deck.iterator();
-        //TODO
+
+
+
         deckIterator.forEachRemaining(card -> {
             stockPile.addCard(card);
             addMouseEventHandlers(card);

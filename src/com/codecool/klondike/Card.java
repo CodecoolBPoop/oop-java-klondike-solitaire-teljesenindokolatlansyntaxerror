@@ -78,8 +78,12 @@ public class Card extends ImageView {
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //TODO
-        return true;
+        if (card1.getSuit() < 3 & card2.getSuit() > 2) {
+            return true;
+        } else if (card1.getSuit() > 2 & card2.getSuit() < 3){
+            return true;
+        }
+        return false;
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
@@ -93,6 +97,7 @@ public class Card extends ImageView {
                 result.add(new Card(suit, rank, true));
             }
         }
+        Collections.shuffle(result);
         return result;
     }
 
